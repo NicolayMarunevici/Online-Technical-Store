@@ -18,9 +18,7 @@ public class OrderDetails {
   private Long id;
   private Long total;
   @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "user_id", referencedColumnName = "id") // +
-  private User user;
-  @OneToOne(mappedBy = "orderDetails") // +
+  @JoinColumn(name = "order_items_id", referencedColumnName = "id") // +
   private OrderItems orderItems;
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "payment_details_id", referencedColumnName = "id") // +

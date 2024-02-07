@@ -16,8 +16,7 @@ public class OrderItems {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "order_items_id", referencedColumnName = "id") // +
+  @OneToOne(mappedBy = "orderItems")
   private OrderDetails orderDetails;
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "product_id", referencedColumnName = "id") // +

@@ -1,0 +1,8 @@
+
+X	java:S125"<This block of commented-out lines of code should be removed.(€æîÉ8¨Ì–ó×1
+W
+java:S1128"<Remove this unused import 'jakarta.persistence.CascadeType'.(ÃÃÊŠúÿÿÿÿ
+Q
+java:S1128";Remove this unused import 'jakarta.persistence.JoinColumn'.(İçÆ•
+[
+java:S1128	"9Remove this unused import 'jakarta.persistence.OneToOne'.(Ç­É™üÿÿÿÿ8¨Ì–ó×1

@@ -1,7 +1,6 @@
 package com.technical.store.online.technical.store.dto;
 
 import java.util.Date;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +12,7 @@ public class UserDto {
   private String firstName;
   private String lastName;
   private String address;
-  private Integer phone;
+  private String phone;
   private Date createdAt;
   private Date updatedAt;
 }

@@ -1,6 +1,5 @@
 package com.technical.store.online.technical.store.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,16 +15,20 @@ public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+//  private Long userId;
+//  private String userAccessToken;
+
   private String username;
-  private String password;
+  private String email;
+//  private String password;
   private String firstName;
   private String lastName;
-  private String address;
-  private Integer phone;
-  @OneToOne(mappedBy = "user") // +
-  private ShoppingSession shoppingSession;
-  @OneToOne(mappedBy = "user") // +
-  private OrderDetails orderDetails;
+  @OneToOne
+  @JoinColumn(name = "cart_id")
+  private Cart cart; // +
+  @OneToOne
+  @JoinColumn(name = "order_details_id")
+  private OrderDetails orderDetails; // +
   private Date createdAt;
   private Date updatedAt;
 }
