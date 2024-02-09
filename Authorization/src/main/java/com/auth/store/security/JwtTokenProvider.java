@@ -1,5 +1,6 @@
 package com.auth.store.security;
 
+import com.auth.store.exception.UserNotFoundException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

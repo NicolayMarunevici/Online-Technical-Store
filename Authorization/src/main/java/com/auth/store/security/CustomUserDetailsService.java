@@ -1,6 +1,7 @@
 package com.auth.store.security;
 
 import com.auth.store.entity.User;
+import com.auth.store.exception.UserNotFoundException;
 import com.auth.store.repository.UserRepository;
 import java.util.Set;
 import java.util.stream.Collectors;

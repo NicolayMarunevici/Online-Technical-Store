@@ -1,10 +1,9 @@
 package com.auth.store.controller;
 
 import com.auth.store.entity.User;
-import com.auth.store.service.impl.UserServiceImpl;
+import com.auth.store.service.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,25 +16,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("api/v1")
 public class UserController {
-  private final UserServiceImpl userServiceImpl;
+  private final UserService userService;
 
 
   @PreAuthorize("hasRole('ADMIN')")
   @GetMapping
-  public ResponseEntity<List<User>> getAll() {
-
-    return ResponseEntity.ok(userServiceImpl.getAll());
+  public List<User> getAll() {
+    return userService.getAll();
   }
 
   @PreAuthorize(value = "{hasRole('USER'), hasRole('ADMIN')}")
   @GetMapping("/{id}")
-  public ResponseEntity<User> getById(@PathVariable long id) {
-    return ResponseEntity.ok(userServiceImpl.getById(id));
+  public User getById(@PathVariable long id) {
+    return userService.getById(id);
   }
 
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping
-  public ResponseEntity<User> create(@RequestBody User user) {
-    return ResponseEntity.ok(userServiceImpl.create(user));
+  public User create(@RequestBody User user) {
+    return userService.create(user);
   }
 }
