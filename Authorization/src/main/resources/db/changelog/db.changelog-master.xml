@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!--    Create the table users_roles if does not exist-->
+<!--    <changeSet id="1" author="Nikolay1">-->
+<!--        <validCheckSum>9:4399d6cc235fbb8b5c3ff244f64fa94c</validCheckSum>-->
+<!--        <preConditions onFail="CONTINUE">-->
+<!--            <not>-->
+<!--                <tableExists tableName="users_roles"/>-->
+<!--            </not>-->
+<!--        </preConditions>-->
+<!--        <createTable tableName="users_roles">-->
+<!--            <column name="role_id" type="int"/>-->
+<!--            <column name="user_id" type="int"/>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
+
+<!--&lt;!&ndash;        Create the table role if does not exist&ndash;&gt;-->
+<!--    <changeSet id="2" author="Nikolay2">-->
+<!--        <preConditions onFail="CONTINUE">-->
+<!--            <not>-->
+<!--                <tableExists tableName="role"/>-->
+<!--            </not>-->
+<!--        </preConditions>-->
+<!--        <createTable tableName="role">-->
+<!--            <column name="id" type="int">-->
+<!--                <constraints primaryKey="true" uniqueConstraintName="role_id_unq"/>-->
+<!--            </column>-->
+<!--            <column name="name" type="varchar(250)">-->
+<!--                <constraints unique="true" uniqueConstraintName="role_name_unq"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
+<!--        <addForeignKeyConstraint baseTableName="role" baseColumnNames="id" constraintName="role_id_fk"-->
+<!--                                 referencedTableName="users_roles" referencedColumnNames="role_id"/>-->
+<!--    </changeSet>-->
+
+<!--    &lt;!&ndash;    Create the table user if does not exist&ndash;&gt;-->
+<!--    <changeSet id="3" author="Nikolay3">-->
+<!--        <preConditions onFail="CONTINUE">-->
+<!--            <not>-->
+<!--                <tableExists tableName="user"/>-->
+<!--            </not>-->
+<!--        </preConditions>-->
+<!--        <createTable tableName="user">-->
+<!--            <column name="id" type="int">-->
+<!--                <constraints primaryKey="true" primaryKeyName="id"/>-->
+<!--            </column>-->
+<!--            <column name="username" type="varchar(250)">-->
+<!--                <constraints unique="true" uniqueConstraintName="username_unq"/>-->
+<!--            </column>-->
+<!--            <column name="password" type="varchar(250)"/>-->
+<!--            <column name="email" type="varchar(250)">-->
+<!--                <constraints unique="true" uniqueConstraintName="email_unq"/>-->
+<!--            </column>-->
+<!--            <column name="refresh_token" type="varchar(250)">-->
+<!--                <constraints unique="true" uniqueConstraintName="refresh_token_unq"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
+<!--        <addAutoIncrement tableName="user" columnName="id" columnDataType="int"/>-->
+<!--        <addForeignKeyConstraint baseTableName="user" baseColumnNames="id" constraintName="user_id_fk"-->
+<!--                                 referencedTableName="users_roles" referencedColumnNames="user_id"/>-->
+
+        <!--        If the table user is empty, then inserts admin and this admin will be added in users_roles table -->
+<!--    </changeSet>-->
+    <changeSet id="4" author="Nikolay4">
+        <preConditions onFail="CONTINUE">
+            <tableIsEmpty tableName="user"/>
+        </preConditions>
+        <insert tableName="user">
+            <column name="id" value="1"/>
+            <column name="username" value="admin"/>
+            <column name="password" value="12345"/>
+            <column name="email" value="admin@mail.com"/>
+        </insert>
+        <insert tableName="users_roles">
+            <column name="user_id" value="1"/>
+            <column name="role_id" value="2"/>
+        </insert>
+    </changeSet>
+
+    <!--    If the table role is empty, then add 2 rows-->
+    <changeSet id="5" author="Nikolay5">
+        <preConditions onFail="CONTINUE">
+            <tableIsEmpty tableName="role"/>
+        </preConditions>
+        <insert tableName="role">
+            <column name="id" value="1"/>
+            <column name="name" value="ROLE_USER"/>
+        </insert>
+        <insert tableName="role">
+            <column name="id" value="2"/>
+            <column name="name" value="ROLE_ADMIN"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
