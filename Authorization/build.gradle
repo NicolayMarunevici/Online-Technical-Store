@@ -22,9 +22,9 @@ repositories {
 	mavenCentral()
 	maven { url 'https://repo.spring.io/milestone' }
 	maven { url 'https://repo.spring.io/snapshot' }
-	dependencies {
-		implementation 'org.liquibase:liquibase-gradle-plugin:2.2.1'
-	}
+//	dependencies {
+//		implementation 'org.liquibase:liquibase-gradle-plugin:2.2.1'
+//	}
 }
 
 dependencies {

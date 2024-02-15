@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+    <!--                    If the table user is empty, then inserts admin and this admin will be added in users_roles table-->
+    <changeSet id="4" author="Nikolay4">
+        <preConditions>
+            <sqlCheck
+                    expectedResult="1">select count(*) from user</sqlCheck>
+        </preConditions>
+        <insert tableName="user">
+            <column name="id" value="1"/>
+            <column name="username" value="admin"/>
+            <column name="password" value="12345"/>
+            <column name="email" value="admin@mail.com"/>
+        </insert>
+    </changeSet>
+
+    <!--    If the table role is empty, then add 2 rows-->
+    <changeSet id="5" author="Nikolay5">
+        <preConditions onFail="CONTINUE">
+            <sqlCheck
+                    expectedResult="1">select count(*) from role;</sqlCheck>
+        </preConditions>
+        <insert tableName="role">
+            <column name="id" value="1"/>
+            <column name="name" value="ROLE_USER"/>
+        </insert>
+        <insert tableName="role">
+            <column name="id" value="2"/>
+            <column name="name" value="ROLE_ADMIN"/>
+        </insert>
+    </changeSet>
+
+    <!--    If the table role is empty, then add 2 rows-->
+    <changeSet id="6" author="Nikolay6" runOrder="last">
+        <preConditions onFail="CONTINUE">
+            <sqlCheck
+                    expectedResult="1">select count(*) from users_roles</sqlCheck>
+        </preConditions>
+        <insert tableName="users_roles">
+            <column name="user_id" value="1"/>
+            <column name="role_id" value="2"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
