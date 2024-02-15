@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+<!--        Create the table role if does not exist-->
+    <changeSet id="1" author="Nikolay1" runOrder="first">
+        <preConditions onFail="CONTINUE">
+            <sqlCheck expectedResult="0">SELECT IF(COUNT(*) > 0, 1, 0) AS table_exists
+                                         FROM information_schema.tables
+                                         WHERE table_schema = 'auth'
+                                           AND table_name = 'role';
+            </sqlCheck>
+        </preConditions>
+        <createTable tableName="role">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" uniqueConstraintName="role_id_unq"/>
+            </column>
+            <column name="name" type="varchar(250)">
+                <constraints unique="true" uniqueConstraintName="role_name_unq"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!--    Create the table user if does not exist-->
+    <changeSet id="2" author="Nikolay2">
+        <preConditions onFail="CONTINUE">
+            <sqlCheck expectedResult="0">SELECT IF(COUNT(*) > 0, 1, 0) AS table_exists
+                                         FROM information_schema.tables
+                                         WHERE table_schema = 'auth'
+                                           AND table_name = 'user';
+            </sqlCheck>
+        </preConditions>
+        <createTable tableName="user">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" uniqueConstraintName="user_id_unq"/>
+            </column>
+            <column name="username" type="varchar(250)">
+                <constraints unique="true" uniqueConstraintName="username_unq"/>
+            </column>
+            <column name="password" type="varchar(250)"/>
+            <column name="email" type="varchar(250)">
+                <constraints unique="true" uniqueConstraintName="email_unq"/>
+            </column>
+            <column name="refresh_token" type="varchar(250)">
+                <constraints unique="true" uniqueConstraintName="refresh_token_unq"/>
+            </column>
+        </createTable>
+        <addAutoIncrement tableName="user" columnName="id" columnDataType="BIGINT"/>
+    </changeSet>
+
+    <!--        Create the table users_roles if does not exist-->
+    <changeSet id="3" author="Nikolay3">
+        <preConditions onFail="CONTINUE">
+            <sqlCheck expectedResult="0">SELECT IF(COUNT(*) > 0, 1, 0) AS table_exists
+                                         FROM information_schema.tables
+                                         WHERE table_schema = 'auth'
+                                           AND table_name = 'users_roles';
+            </sqlCheck>
+        </preConditions>
+        <createTable tableName="users_roles">
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="role_id_fk" references="role(id)"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="user_id_fk" references="user(id)"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
